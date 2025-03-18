@@ -1,13 +1,18 @@
 import { Router } from 'express';
-import { createUser, listUsers, updateUser, deleteUser } from '../controllers/userController.js';
+import { createUser, listUsers, updateUser, deleteUser, showUser } from '../controllers/userController.js';
+
+import validator from '../middleware/validator.js';
+import userValidation from './userValidation.js';
 
 const router = Router()
 
 router.get('/', listUsers)
 
-router.post('/', createUser)
+router.get('/:id', showUser)
 
-router.put('/:id', updateUser)
+router.post('/', validator(userValidation), createUser)
+
+router.put('/:id', validator(userValidation), updateUser)
 
 router.delete('/:id', deleteUser)
 
